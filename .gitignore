@@ -8,3 +8,8 @@ __pycache__/
 **/resultado-local.md
 .pytest_cache/
 .ruff_cache/
+node_modules/
+dist/
+playwright-report/
+test-results/
+.npm-cache/
