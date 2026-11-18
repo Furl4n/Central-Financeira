@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+*.pyc
+.uv-cache/
+**/resultado-local.md
+.pytest_cache/
+.ruff_cache/
