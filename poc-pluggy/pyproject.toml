@@ -1,0 +1,9 @@
+[project]
+name = "central-financeira-poc-pluggy"
+version = "0.1.0"
+description = "Consulta local e diagnóstico sanitizado da integração Meu Pluggy"
+requires-python = ">=3.13"
+dependencies = []
+
+[tool.uv]
+package = false
