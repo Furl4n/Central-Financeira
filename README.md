@@ -35,6 +35,37 @@ Documentação interativa: http://127.0.0.1:8000/docs.
 A API entrega dados financeiros reais ao navegador local; eles não são logs.
 Não há autenticação de usuários nem configuração para exposição pública.
 
+## Dashboard
+
+Com a API em execução na porta 8000, abra outro terminal na raiz:
+
+```powershell
+cd frontend
+npm.cmd ci
+npm.cmd run dev
+```
+
+Acesse http://127.0.0.1:5173. O dashboard apresenta contas e crédito separados,
+movimentações com filtros e paginação, faturas e estado das conexões. É possível
+ocultar valores. “Recarregar dados” consulta o banco local; uma nova importação
+do Pluggy continua sendo feita pelo comando de sincronização do backend.
+
+O Vite encaminha `/api` ao backend local; o navegador não recebe credenciais
+Pluggy. Não há persistência dos dados financeiros em localStorage, fontes
+remotas ou serviços de análise. `npm.cmd run build` verifica TypeScript e gera
+o build. O frontend foi preparado para desenvolvimento local; o build isolado
+precisa de um servidor que encaminhe `/api` para o backend.
+
+Testes de navegador, com respostas fictícias e sem consultar suas contas:
+
+```powershell
+npx.cmd playwright install chromium
+npm.cmd test
+```
+
+No Windows, também é possível usar o Edge instalado, sem baixar Chromium:
+`$env:PLAYWRIGHT_CHANNEL = 'msedge'` antes de `npm.cmd test`.
+
 | Endpoint | Uso |
 |---|---|
 | GET /health | Disponibilidade do banco |
