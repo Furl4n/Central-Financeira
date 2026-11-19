@@ -170,52 +170,8 @@ nav {
   font-weight: 650;
   font-size: 0.875rem;
 }
-.avatar.small {
-  height: 31px;
-  width: 31px;
-}
 .main-shell {
   margin-left: 232px;
-}
-.topbar {
-  height: 78px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 42px;
-  border-bottom: 1px solid #e3e8e6;
-  background: #fff;
-}
-.breadcrumb {
-  display: flex;
-  gap: 16px;
-  color: #74817c;
-  font-size: 0.875rem;
-}
-.breadcrumb strong {
-  font-weight: 500;
-  color: #354c40;
-}
-.breadcrumb > span {
-  color: #c7cfca;
-}
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 19px;
-}
-.local-badge {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.8rem;
-  color: #62766b;
-}
-.local-badge > span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #62a283;
 }
 .icon-button {
   display: inline-flex;
@@ -235,9 +191,9 @@ nav {
 }
 main {
   max-width: 1560px;
-  padding: 36px 42px 0;
+  padding: 24px 42px 0;
   margin: auto;
-  min-height: calc(100vh - 78px);
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -971,7 +927,7 @@ dd {
 }
 @media (min-width: 1500px) {
   main {
-    padding-top: 44px;
+    padding-top: 28px;
   }
   .summary-values {
     margin: 27px 0 23px;
@@ -991,11 +947,8 @@ dd {
   .main-shell {
     margin-left: 210px;
   }
-  .topbar {
-    padding: 0 27px;
-  }
   main {
-    padding: 30px 27px 0;
+    padding: 22px 27px 0;
   }
   .summary-grid {
     gap: 12px;
@@ -1066,9 +1019,6 @@ dd {
   }
   .main-shell {
     margin-left: 78px;
-  }
-  .topbar {
-    height: 68px;
   }
   .summary-grid {
     grid-template-columns: 1fr 1fr;
@@ -1168,25 +1118,8 @@ dd {
   .main-shell {
     margin: 0;
   }
-  .topbar {
-    height: 55px;
-    padding: 0 18px;
-  }
-  .breadcrumb {
-    gap: 10px;
-    font-size: 0.75rem;
-  }
-  .topbar-right {
-    gap: 8px;
-  }
-  .topbar-right > .avatar {
-    display: none;
-  }
-  .local-badge {
-    font-size: 0.7rem;
-  }
   main {
-    padding: 26px 16px 0;
+    padding: 18px 16px 0;
   }
   .page-heading {
     align-items: flex-start;
@@ -1402,4 +1335,21 @@ th {
   .transaction-value {
     font-size: 0.875rem;
   }
+}
+
+.balance-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.balance-visibility {
+  color: #deebe2;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+.balance-visibility:hover:not(:disabled) {
+  background: #ffffff15;
+  border-color: #ffffff30;
 }

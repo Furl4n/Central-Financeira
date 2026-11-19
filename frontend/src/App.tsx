@@ -173,25 +173,6 @@ export default function App() {
         </div>
       </aside>
       <div className="main-shell">
-        <header className="topbar">
-          <div className="breadcrumb">
-            Meu espaço <span>/</span> <strong>{title}</strong>
-          </div>
-          <div className="topbar-right">
-            <span className="local-badge">
-              <span />
-              Uso local
-            </span>
-            <button
-              className="icon-button"
-              aria-label={hidden ? "Mostrar valores" : "Ocultar valores"}
-              onClick={() => setHidden((value) => !value)}
-            >
-              {hidden ? <EyeOff size={19} /> : <Eye size={19} />}
-            </button>
-            <span className="avatar small">P</span>
-          </div>
-        </header>
         <main id="main">
           <div className="page-heading">
             <div>
@@ -251,6 +232,7 @@ export default function App() {
                         accounts={accounts}
                         connections={connections}
                         hidden={hidden}
+                        onToggleVisibility={() => setHidden((value) => !value)}
                         onConnections={() => setView("connections")}
                       />
                       <div className="content-grid">
@@ -344,11 +326,13 @@ function Overview({
   connections,
   hidden,
   onConnections,
+  onToggleVisibility,
 }: {
   accounts: Account[];
   connections: Connection[];
   hidden: boolean;
   onConnections: () => void;
+  onToggleVisibility: () => void;
 }) {
   const banks = accounts.filter((account) => account.type === "BANK");
   const cards = accounts.filter((account) => account.type === "CREDIT");
@@ -374,20 +358,30 @@ function Overview({
           <span>Saldo nas contas</span>
           <Wallet size={20} />
         </div>
-        <div className="summary-values">
-          {balances.length ? (
-            balances.map((item) => (
-              <div key={item.currency}>
-                <Amount
-                  value={item.amount}
-                  currency={item.currency}
-                  hidden={hidden}
-                />
-              </div>
-            ))
-          ) : (
-            <span className="unavailable">Não informado</span>
-          )}
+        <div className="balance-line">
+          <div className="summary-values">
+            {balances.length ? (
+              balances.map((item) => (
+                <div key={item.currency}>
+                  <Amount
+                    value={item.amount}
+                    currency={item.currency}
+                    hidden={hidden}
+                  />
+                </div>
+              ))
+            ) : (
+              <span className="unavailable">Não informado</span>
+            )}
+          </div>
+          <button
+            className="icon-button balance-visibility"
+            aria-label={hidden ? "Mostrar valores" : "Ocultar valores"}
+            aria-pressed={hidden}
+            onClick={onToggleVisibility}
+          >
+            {hidden ? <EyeOff size={19} /> : <Eye size={19} />}
+          </button>
         </div>
         <div className="summary-foot">
           <Landmark size={14} />
