@@ -315,27 +315,6 @@ h1 {
   font-size: 0.75rem;
   margin-top: 7px;
 }
-.sync-card {
-  text-align: left;
-  font: inherit;
-  transition: border-color 0.15s;
-}
-.sync-card:hover {
-  border-color: #9eb5a6;
-}
-.connection-count {
-  font-size: 2.1rem;
-  margin: 18px 0;
-  letter-spacing: -1px;
-  font-weight: 600;
-}
-.connection-count > span {
-  font-size: 0.875rem;
-  letter-spacing: 0;
-  font-weight: 400;
-  color: #7e8d82;
-  margin-left: 12px;
-}
 .unavailable {
   font-size: 1.3rem;
 }
@@ -1023,9 +1002,6 @@ dd {
   .summary-grid {
     grid-template-columns: 1fr 1fr;
   }
-  .sync-card {
-    display: none;
-  }
   .content-grid {
     grid-template-columns: 1fr;
   }
@@ -1352,4 +1328,16 @@ th {
 .balance-visibility:hover:not(:disabled) {
   background: #ffffff15;
   border-color: #ffffff30;
+}
+
+.payables-card .summary-foot {
+  justify-content: space-between;
+}
+.payables-card .text-button {
+  font-size: 0.8rem;
+}
+@media (min-width: 601px) and (max-width: 900px) {
+  .payables-card {
+    grid-column: 1 / -1;
+  }
 }

@@ -28,6 +28,7 @@ import type {
   Page,
   Statement,
   Transaction,
+  Payables,
 } from "./types";
 
 type View = "overview" | "transactions" | "statements" | "connections";
@@ -230,10 +231,10 @@ export default function App() {
                     <>
                       <Overview
                         accounts={accounts}
-                        connections={connections}
                         hidden={hidden}
                         onToggleVisibility={() => setHidden((value) => !value)}
-                        onConnections={() => setView("connections")}
+                        revision={revision}
+                        onStatements={() => setView("statements")}
                       />
                       <div className="content-grid">
                         <section className="panel accounts-panel">
@@ -323,15 +324,15 @@ export default function App() {
 
 function Overview({
   accounts,
-  connections,
   hidden,
-  onConnections,
+  revision,
+  onStatements,
   onToggleVisibility,
 }: {
   accounts: Account[];
-  connections: Connection[];
   hidden: boolean;
-  onConnections: () => void;
+  revision: number;
+  onStatements: () => void;
   onToggleVisibility: () => void;
 }) {
   const banks = accounts.filter((account) => account.type === "BANK");
@@ -346,11 +347,6 @@ function Overview({
     (account) => account.available_credit_limit,
     (account) => account.currency,
   );
-  const success =
-    connections.length > 0 &&
-    connections.every(
-      (connection) => connection.latest_execution?.status === "SUCCEEDED",
-    );
   return (
     <section className="summary-grid" aria-label="Resumo financeiro">
       <div className="summary-card featured">
@@ -420,23 +416,73 @@ function Overview({
           <small>Há cartões com limite não informado.</small>
         )}
       </div>
-      <button className="summary-card sync-card" onClick={onConnections}>
-        <div className="summary-label">
-          <span>Conexões bancárias</span>
-          <Link2 size={20} />
-        </div>
-        <div className="connection-count">
-          {connections.length}
-          <span>{connections.length === 1 ? "conexão" : "conexões"}</span>
-        </div>
-        <div className="summary-foot">
-          <span className={`status ${success ? "green" : "amber"}`}>
-            {success ? <Check size={13} /> : <AlertCircle size={13} />}
-            {success ? "Consulta concluída" : "Verificar sincronização"}
-          </span>
-        </div>
-      </button>
+      <PayablesCard
+        hidden={hidden}
+        revision={revision}
+        onStatements={onStatements}
+      />
     </section>
+  );
+}
+
+function PayablesCard({
+  hidden,
+  revision,
+  onStatements,
+}: {
+  hidden: boolean;
+  revision: number;
+  onStatements: () => void;
+}) {
+  const [retry, setRetry] = useState(0);
+  const data = useResource(`payables-${revision}-${retry}`, (signal) =>
+    request<Payables>("/payables", signal),
+  );
+  return (
+    <div className="summary-card payables-card">
+      <div className="summary-label">
+        <span>A pagar</span>
+        <FileText size={20} />
+      </div>
+      <div className="summary-values" aria-live="polite">
+        {data.loading ? (
+          <span className="unavailable">Carregando…</span>
+        ) : data.error ? (
+          <span className="unavailable">Indisponível</span>
+        ) : data.data?.totals.length ? (
+          data.data.totals.map((item) => (
+            <div key={item.currency}>
+              <Amount
+                value={item.amount}
+                currency={item.currency}
+                hidden={hidden}
+              />
+            </div>
+          ))
+        ) : (
+          <span className="unavailable">Não informado</span>
+        )}
+      </div>
+      <div className="summary-foot">
+        {data.error ? (
+          <button
+            className="text-button"
+            onClick={() => setRetry((value) => value + 1)}
+          >
+            Tentar novamente
+          </button>
+        ) : (
+          <>
+            <span title="Faturas menos pagamentos registrados, mais compras pendentes sem fatura. Valores sujeitos à atualização e à conciliação da instituição.">
+              Estimativa
+            </span>
+            <button className="text-button" onClick={onStatements}>
+              Ver faturas
+            </button>
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 

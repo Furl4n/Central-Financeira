@@ -4,6 +4,14 @@ export interface Page<T> {
   limit: number;
   offset: number;
 }
+
+export interface Payables {
+  totals: { currency: string; amount: string }[];
+  statement_count: number;
+  pending_purchase_count: number;
+  boletos_available: boolean;
+  estimated: boolean;
+}
 export interface Account {
   id: string;
   connection_id: string;

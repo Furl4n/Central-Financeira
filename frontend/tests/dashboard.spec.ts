@@ -45,6 +45,16 @@ async function mockAPI(
         status: 503,
         json: { detail: "Dados não devem aparecer em erro" },
       });
+    if (url.pathname === "/api/payables")
+      return route.fulfill({
+        json: {
+          totals: [{ currency: "BRL", amount: "640.30" }],
+          statement_count: 1,
+          pending_purchase_count: 0,
+          boletos_available: false,
+          estimated: true,
+        },
+      });
     const paginate = (items: unknown[]) => {
       const limit = Number(url.searchParams.get("limit") ?? 50);
       const offset = Number(url.searchParams.get("offset") ?? 0);
@@ -123,7 +133,7 @@ test("separa saldo e crédito, oculta valores e não apresenta pagamento como re
   ).toBeVisible();
   await page.getByRole("button", { name: "Ocultar valores" }).click();
   await expect(page.getByText("R$ 1.234,56")).toHaveCount(0);
-  await expect(summary.getByText("••••••")).toHaveCount(2);
+  await expect(summary.getByText("••••••")).toHaveCount(3);
   await page.getByRole("button", { name: "Mostrar valores" }).click();
   await expect(summary.getByText("R$ 1.234,56")).toBeVisible();
 });
@@ -226,7 +236,7 @@ test("layout preenchido cabe na tela e não envia dados para serviços externos"
 }, testInfo) => {
   const external: string[] = [];
   page.on("request", (request) => {
-    if (!request.url().startsWith("http://127.0.0.1:5173"))
+    if (!request.url().startsWith("http://127.0.0.1:"))
       external.push(request.url());
   });
   await mockAPI(page);
@@ -242,4 +252,16 @@ test("layout preenchido cabe na tela e não envia dados para serviços externos"
     fullPage: true,
   });
   expect(external).toEqual([]);
+});
+
+test("cartão A pagar substitui conexões e abre as faturas sem aviso de boletos", async ({ page }) => {
+  await mockAPI(page);
+  await page.goto('/');
+  const summary = page.getByRole('region', { name: 'Resumo financeiro' });
+  await expect(summary.getByText('A pagar', { exact: true })).toBeVisible();
+  await expect(summary.getByText('R$ 640,30')).toBeVisible();
+  await expect(summary.getByText('Conexões bancárias')).toHaveCount(0);
+  await expect(summary.getByText(/boletos/i)).toHaveCount(0);
+  await summary.getByRole('button', { name: 'Ver faturas' }).click();
+  await expect(page.getByRole('heading', { name: 'Faturas do cartão' })).toBeVisible();
 });
