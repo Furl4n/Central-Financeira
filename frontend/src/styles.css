@@ -175,28 +175,6 @@ nav {
 .sidebar-bottom {
   margin-top: auto;
 }
-.local-info {
-  display: flex;
-  align-items: flex-start;
-  gap: 9px;
-  margin: 28px 12px;
-  font-size: 0.8rem;
-  color: #d6e1db;
-}
-.local-info small {
-  display: block;
-  color: #9cb7aa;
-  margin-top: 5px;
-  font-size: 0.75rem;
-}
-.local-dot {
-  background: #8ecda9;
-  height: 6px;
-  width: 6px;
-  border-radius: 50%;
-  margin-top: 5px;
-  flex-shrink: 0;
-}
 .profile {
   border-top: 1px solid #365047;
   padding: 20px 9px 0;
@@ -293,13 +271,6 @@ main {
   align-items: center;
   gap: 24px;
   margin-bottom: 30px;
-}
-.eyebrow {
-  font-size: 0.7rem;
-  letter-spacing: 2px;
-  font-weight: 650;
-  color: #728479;
-  margin: 0 0 10px;
 }
 h1 {
   font-size: 2.1rem;
@@ -406,21 +377,6 @@ h1 {
 }
 .featured .summary-foot {
   color: #d3e4d8;
-}
-.summary-tag,
-.muted-tag {
-  margin-left: auto;
-  font-size: 0.65rem;
-  padding: 4px 7px;
-  border-radius: 4px;
-}
-.summary-tag {
-  color: #d4ebdb;
-  background: #ffffff10;
-}
-.muted-tag {
-  background: #f0f4f1;
-  color: #607667;
 }
 .summary-card > small {
   display: block;
@@ -1014,24 +970,6 @@ dd {
 .error > .text-button {
   margin-top: 8px;
 }
-footer {
-  margin-top: auto;
-  padding: 32px 0 24px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  color: #87938a;
-  font-size: 0.72rem;
-}
-footer > span:last-child {
-  margin-left: auto;
-}
-.footer-brand {
-  color: #6b8072;
-  font-weight: 650;
-  font-size: 1.1rem;
-  letter-spacing: -0.6px;
-}
 .sr-only {
   position: absolute;
   width: 1px;
@@ -1092,10 +1030,6 @@ footer > span:last-child {
   }
   .summary-values {
     font-size: 1.7rem;
-  }
-  .summary-tag,
-  .muted-tag {
-    display: none;
   }
   .content-grid {
     grid-template-columns: 1.5fr 1fr;
@@ -1203,9 +1137,6 @@ footer > span:last-child {
   h1 {
     font-size: 1.9rem;
   }
-  .eyebrow {
-    font-size: 0.65rem;
-  }
   .refresh {
     font-size: 0.8rem;
     padding: 10px;
@@ -1295,10 +1226,6 @@ footer > span:last-child {
   h1 {
     font-size: 1.9rem;
   }
-  .eyebrow {
-    font-size: 0.6rem;
-    margin-bottom: 10px;
-  }
   .refresh {
     padding: 9px 12px;
     align-self: flex-start;
@@ -1317,10 +1244,6 @@ footer > span:last-child {
   }
   .summary-card:not(.featured) .summary-values {
     font-size: 1.8rem;
-  }
-  .summary-tag,
-  .muted-tag {
-    display: block;
   }
   .content-grid {
     margin-bottom: 18px;
@@ -1423,17 +1346,6 @@ footer > span:last-child {
   }
   .empty {
     padding: 50px 15px;
-  }
-  footer {
-    flex-wrap: wrap;
-    gap: 8px 12px;
-    padding-top: 28px;
-    font-size: 0.65rem;
-  }
-  footer > span:last-child {
-    width: 100%;
-    margin-left: 0;
-    padding-left: 59px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

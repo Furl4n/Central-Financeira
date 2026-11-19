@@ -151,7 +151,6 @@ export default function App() {
           </span>
           <div>
             <strong>Minhas finanças</strong>
-            <small>Espaço pessoal</small>
           </div>
           <span className="personal-label">P</span>
         </div>
@@ -173,12 +172,6 @@ export default function App() {
           ))}
         </nav>
         <div className="sidebar-bottom">
-          <div className="local-info">
-            <span className="local-dot" />
-            <span>
-              Seu espaço, seus dados<small>Executando neste computador</small>
-            </span>
-          </div>
           <div className="profile">
             <span className="avatar">P</span>
             <div>
@@ -211,7 +204,6 @@ export default function App() {
         <main id="main">
           <div className="page-heading">
             <div>
-              <p className="eyebrow">SUAS FINANÇAS, COM CLAREZA</p>
               <h1>{title}</h1>
               <p>
                 {view === "overview"
@@ -275,7 +267,6 @@ export default function App() {
                           <div className="section-heading">
                             <div>
                               <h2>Suas contas</h2>
-                              <p>Dinheiro disponível e crédito, separados.</p>
                             </div>
                             <span className="count-badge">
                               {accounts.length}
@@ -351,11 +342,6 @@ export default function App() {
               )}
             </>
           )}
-          <footer>
-            <span className="footer-brand">central.</span>
-            <span>Organizar o presente. Planejar o próximo passo.</span>
-            <span>Horário de Brasília</span>
-          </footer>
         </main>
       </div>
     </div>
@@ -416,7 +402,6 @@ function Overview({
           <Landmark size={14} />
           {banks.length}{" "}
           {banks.length === 1 ? "conta bancária" : "contas bancárias"}
-          <span className="summary-tag">Sem limite de cartão</span>
         </div>
         {banks.some((account) => account.balance === null) && (
           <small>Há contas com saldo não informado.</small>
@@ -445,7 +430,6 @@ function Overview({
         <div className="summary-foot">
           {cards.length}{" "}
           {cards.length === 1 ? "cartão conectado" : "cartões conectados"}
-          <span className="muted-tag">Limite, não saldo</span>
         </div>
         {cards.some((account) => account.available_credit_limit === null) && (
           <small>Há cartões com limite não informado.</small>
