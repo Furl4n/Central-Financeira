@@ -20,6 +20,19 @@ class Page(BaseModel, Generic[T]):
     offset: int
 
 
+class CurrencyAmount(BaseModel):
+    currency: str
+    amount: Decimal
+
+
+class PayablesRead(BaseModel):
+    totals: list[CurrencyAmount]
+    statement_count: int
+    pending_purchase_count: int
+    boletos_available: bool
+    estimated: bool
+
+
 class AccountRead(ReadModel):
     id: UUID
     connection_id: UUID

@@ -11,7 +11,16 @@ from sqlalchemy.orm import Session
 from app.config import Settings
 from app.db import make_engine
 from app.models import Account, BankConnection, CardStatement, SyncExecution, Transaction
-from app.schemas import AccountRead, ConnectionRead, Page, StatementRead, SyncRead, TransactionRead
+from app.payables import card_payables
+from app.schemas import (
+    AccountRead,
+    ConnectionRead,
+    Page,
+    PayablesRead,
+    StatementRead,
+    SyncRead,
+    TransactionRead,
+)
 
 
 def get_session(request: Request):
@@ -49,6 +58,10 @@ def create_app(engine=None):
     def health(session: DB):
         session.execute(text("SELECT 1"))
         return {"status": "ok"}
+
+    @app.get("/payables", response_model=PayablesRead)
+    def payables(session: DB):
+        return card_payables(session)
 
     @app.get("/accounts", response_model=Page[AccountRead])
     def accounts(
