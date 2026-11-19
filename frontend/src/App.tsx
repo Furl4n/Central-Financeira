@@ -145,15 +145,6 @@ export default function App() {
           </span>
           central<span className="brand-period">.</span>
         </a>
-        <div className="workspace">
-          <span className="workspace-icon">
-            <Wallet size={18} />
-          </span>
-          <div>
-            <strong>Minhas finanças</strong>
-          </div>
-          <span className="personal-label">P</span>
-        </div>
         <p className="nav-label">ACOMPANHAR</p>
         <nav aria-label="Navegação principal">
           {navigation.map(({ id, label, icon: Icon }) => (
