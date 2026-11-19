@@ -33,7 +33,12 @@ def card_payables(session):
         ):
             if tx.operation_type == "PAGAMENTO_FATURA":
                 continue  # Evidence of settlement is already in statement.payments.
-            unbilled[tx.currency] += abs(tx.raw_amount) if tx.direction == "DEBIT" else -abs(tx.raw_amount)
+            currency = tx.currency
+            amount = tx.raw_amount
+            if tx.currency != account.currency and tx.amount_in_account_currency is not None:
+                currency = account.currency
+                amount = tx.amount_in_account_currency
+            unbilled[currency] += abs(amount) if tx.direction == "DEBIT" else -abs(amount)
             if tx.direction == "DEBIT":
                 pending_count += 1
         for currency, amount in unbilled.items():

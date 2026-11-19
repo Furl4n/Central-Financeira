@@ -45,6 +45,7 @@ class ProviderTransaction(ProviderModel):
     description: str
     date: str
     raw_amount: Decimal = Field(alias="amount")
+    amount_in_account_currency: Decimal | None = Field(None, alias="amountInAccountCurrency")
     direction: Literal["DEBIT", "CREDIT"] = Field(alias="type")
     currency: str = Field(alias="currencyCode", min_length=3, max_length=3)
     status: Literal["PENDING", "POSTED"]

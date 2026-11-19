@@ -60,7 +60,10 @@ O cartão “A pagar” usa GET /payables: soma por moeda o restante das faturas
 (total menos pagamentos registrados, limitado a zero) e compras PENDING sem
 fatura, descontando os créditos dessas compras por conta/moeda. Não soma o saldo
 do cartão nem transações já vinculadas a faturas. É uma estimativa dos registros
-disponíveis; atrasos, refinanciamentos e saldos carregados entre faturas exigem
+disponíveis. Compras internacionais usam o valor na moeda da conta informado
+pelo banco (`amountInAccountCurrency`); se ele não estiver disponível, conservam
+a moeda original, sem conversão por cotação inventada. Atrasos, refinanciamentos
+e saldos carregados entre faturas exigem
 conciliação para confirmar a dívida efetiva. **Boletos pendentes ainda não estão
 integrados nem incluídos neste total**, pois o Pluggy não oferece consulta DDA.
 Essa limitação fica documentada aqui, sem aviso adicional na interface.

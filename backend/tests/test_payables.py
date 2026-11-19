@@ -84,3 +84,14 @@ def test_no_data_is_not_zero_and_bank_payments_are_not_boleto_debts(engine, fake
     fake_client.snapshot["transactions"]["bank"][0].update(status="PENDING", operationType="BOLETO")
     synchronize(engine, fake_client, "item")
     assert result(engine)["totals"] == [{"currency": "BRL", "amount": "0"}]
+
+
+def test_foreign_purchase_uses_bank_conversion_when_available(engine, fake_client):
+    tx = fake_client.snapshot["transactions"]["card"][0]
+    tx.update(currencyCode="USD", amount=Decimal("10"), amountInAccountCurrency=Decimal("57.23"))
+    synchronize(engine, fake_client, "item")
+    assert result(engine)["totals"] == [{"currency": "BRL", "amount": "57.23"}]
+    # Zero is a reported converted amount too, not a missing conversion.
+    tx["amountInAccountCurrency"] = Decimal(0)
+    synchronize(engine, fake_client, "item")
+    assert result(engine)["totals"] == [{"currency": "BRL", "amount": "0"}]

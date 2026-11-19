@@ -82,6 +82,7 @@ class Transaction(Identity, Base):
     occurred_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     source_date: Mapped[str]
     raw_amount: Mapped[Decimal] = mapped_column(Numeric())
+    amount_in_account_currency: Mapped[Decimal | None] = mapped_column(Numeric())
     direction: Mapped[str] = mapped_column(String(10))
     currency: Mapped[str] = mapped_column(String(3))
     status: Mapped[str] = mapped_column(String(10))
